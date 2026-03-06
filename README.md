@@ -13,6 +13,25 @@ fit modelling, squad optimisation and uncertainty simulation**.
 
 ------------------------------------------------------------------------
 
+## End-to-End Decision Pipeline
+
+```mermaid
+flowchart LR
+    A[StatsBomb Event Data] --> B[Event Processing]
+    B --> C[xT Possession Value]
+    B --> D[VAEP-Style Action Value]
+    C --> E[Player Value Modelling]
+    D --> E
+    E --> F[Team Tactical Profiling]
+    F --> G[Player Tactical Segmentation]
+    G --> H[Player-Team Fit Modelling]
+    H --> I[Recruitment Shortlisting]
+    I --> J[Budget-Constrained Squad Optimisation]
+    J --> K[Robust Recruitment Simulation]
+```
+
+------------------------------------------------------------------------
+
 # Project Overview
 
 Traditional football statistics such as **goals and assists** fail to
@@ -29,42 +48,6 @@ These actions significantly increase the probability of scoring.
 This project builds a **data-driven framework that assigns value to each
 on-ball action and aggregates these values to measure player impact,
 tactical profiles and recruitment potential**.
-
-------------------------------------------------------------------------
-
-# Analytics Pipeline
-
-    StatsBomb event data
-            │
-            ▼
-    Event preprocessing
-            │
-            ▼
-    Expected Threat (xT)
-            │
-            ▼
-    VAEP action valuation
-            │
-            ▼
-    Player value model
-            │
-            ▼
-    Team tactical profiling
-            │
-            ▼
-    Player tactical segmentation
-            │
-            ▼
-    Player-team fit modelling
-            │
-            ▼
-    Recruitment shortlist
-            │
-            ▼
-    Budget-constrained squad optimisation
-            │
-            ▼
-    Robust recruitment simulation
 
 ------------------------------------------------------------------------
 
