@@ -26,3 +26,6 @@ tqdm
 pyarrow
 python-dotenv
 pyyaml
+
+# Squad optimisation
+pulp>=2.7
