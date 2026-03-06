@@ -205,6 +205,12 @@ The framework can be extended for scouting, tactical analysis and recruitment de
 
 ---
 
+## License
+
+This project is licensed under the MIT License.
+
+---
+
 # Author
 
 Manuel Pérez Bañuls
