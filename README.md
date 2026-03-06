@@ -1,217 +1,269 @@
 # Football Possession Value
-### Data-Driven Tactical Analysis with Event Data
 
-A football analytics project that models **possession value and player impact** using event data.
+### Data-Driven Tactical Analysis & Recruitment Decision Modelling
 
-The goal is to quantify how individual actions contribute to goal probability and to identify players who generate real attacking value through ball progression, creativity and decision making.
+A football analytics project that models **possession value, player
+impact, tactical team styles, and recruitment decisions** using event
+data.
 
-This project implements modern football analytics concepts such as **Expected Threat (xT)** and **VAEP-style action valuation** using open event data.
+The project implements modern football analytics concepts such as
+**Expected Threat (xT)** and **VAEP-style action valuation**, and
+extends them into a **recruitment decision framework including tactical
+fit modelling, squad optimisation and uncertainty simulation**.
 
----
+------------------------------------------------------------------------
 
 # Project Overview
 
-Traditional football statistics such as goals and assists fail to capture the value of actions earlier in attacking sequences.
+Traditional football statistics such as **goals and assists** fail to
+capture the value of actions earlier in attacking sequences.
 
-For example:
+Examples include:
 
-- a progressive pass breaking defensive lines  
-- a carry into the final third  
-- a cutback before a shot  
+-   progressive passes breaking defensive lines\
+-   carries into the final third\
+-   cutbacks before shots
 
-These actions can dramatically increase the probability of scoring.
+These actions significantly increase the probability of scoring.
 
-This project builds a framework that assigns **value to each on-ball action** and aggregates these values to measure **player impact and tactical profiles**.
+This project builds a **data-driven framework that assigns value to each
+on-ball action and aggregates these values to measure player impact,
+tactical profiles and recruitment potential**.
 
----
+------------------------------------------------------------------------
 
-# Dataset
+# Analytics Pipeline
 
-Event data is sourced from **StatsBomb Open Data**.
+    StatsBomb event data
+            │
+            ▼
+    Event preprocessing
+            │
+            ▼
+    Expected Threat (xT)
+            │
+            ▼
+    VAEP action valuation
+            │
+            ▼
+    Player value model
+            │
+            ▼
+    Team tactical profiling
+            │
+            ▼
+    Player tactical segmentation
+            │
+            ▼
+    Player-team fit modelling
+            │
+            ▼
+    Recruitment shortlist
+            │
+            ▼
+    Budget-constrained squad optimisation
+            │
+            ▼
+    Robust recruitment simulation
 
-The dataset contains detailed match event logs including:
+------------------------------------------------------------------------
 
-- passes
-- carries
-- shots
-- defensive actions
-- possession sequences
-- spatial coordinates of events
+# Recruitment Optimisation
 
-Each event includes contextual information such as:
+Example of an **optimised recruitment squad under budget constraints**.
 
-- location on the pitch
-- player
-- team
-- possession sequence
-- pressure status
+![Optimised squad](reports/figures/optimised_squad.png)
 
-This allows the reconstruction of attacking sequences and the modelling of possession value.
+Players are selected to maximise **squad value and tactical fit** while
+satisfying:
 
----
+-   transfer budget
+-   role coverage
+-   tactical compatibility
+
+------------------------------------------------------------------------
+
+# Optimisation Trade-Off
+
+Optimisation balances **player quality vs cost efficiency**.
+
+![Optimisation scatter](reports/figures/optimisation_scatter.png)
+
+The MILP solver selects the combination of players that **maximises
+total squad value while remaining under the budget constraint**.
+
+------------------------------------------------------------------------
+
+# Robust Recruitment Simulation
+
+Recruitment decisions involve uncertainty in:
+
+-   player performance
+-   tactical fit
+-   transfer costs
+
+Monte Carlo simulation evaluates the robustness of recruitment
+decisions.
+
+## Distribution of Squad Value
+
+![Squad value
+distribution](reports/figures/squad_value_distribution.png)
+
+## Distribution of Squad Cost
+
+![Squad cost distribution](reports/figures/squad_cost_distribution.png)
+
+------------------------------------------------------------------------
 
 # Methodology
 
-The project follows three modelling layers.
+### Expected Threat (xT)
 
-## 1. Expected Threat (xT)
-
-A spatial model that assigns value to pitch zones.
-
-Each action is valued as the increase in threat between the start and end locations:
+Spatial model assigning value to pitch zones.
 
 ΔxT = xT(destination) − xT(origin)
 
-This provides a simple and interpretable baseline model.
+Captures **ball progression value**.
 
----
+------------------------------------------------------------------------
 
-## 2. VAEP-style Action Valuation
+### VAEP-Style Action Valuation
 
-A supervised learning model predicts:
+Machine learning model estimating:
 
-- probability of scoring in the next actions
-- probability of conceding
-
-Action value is defined as:
+-   probability of scoring
+-   probability of conceding
 
 Value(action) = ΔP(score) − ΔP(concede)
 
-This approach captures contextual features such as action type, pressure and possession state.
+------------------------------------------------------------------------
 
----
+### Player Value Modelling
 
-## 3. Player Value & Tactical Profiles
+Action values are aggregated to compute:
 
-Action values are aggregated to measure:
+-   value added per 90
+-   progression contribution
+-   creative impact
+-   turnover cost
 
-- value added per 90 minutes
-- progression value
-- creative value
-- turnover cost
+These metrics identify players generating **real attacking value beyond
+traditional stats**.
 
-These metrics allow the identification of players who generate attacking value beyond traditional statistics.
+------------------------------------------------------------------------
 
----
+### Tactical Team Profiling
+
+Teams are characterised using event distributions such as:
+
+-   possession structure
+-   progressive carries
+-   final-third actions
+
+Unsupervised clustering identifies **tactical archetypes across teams**.
+
+------------------------------------------------------------------------
+
+### Player Tactical Segmentation
+
+Players are grouped into roles such as:
+
+-   elite creator
+-   efficient creator
+-   progression specialist
+-   balanced contributor
+
+This enables **role-aware recruitment modelling**.
+
+------------------------------------------------------------------------
+
+### Player-Team Fit
+
+Similarity between:
+
+-   player tactical vectors
+-   team tactical profiles
+
+Produces a **fit score estimating tactical compatibility**.
+
+------------------------------------------------------------------------
 
 # Project Structure
 
 ```bash
-football-possession-value
-│
-├── data
-│   ├── raw
-│   └── processed
-│
-├── db
-│
-├── notebooks
-│   ├── 01_data_ingestion.ipynb
-│   ├── 02_event_model.ipynb
-│   ├── 03_xT_model.ipynb
-│   ├── 04_vaep_training.ipynb
-│   ├── 05_player_value_analysis.ipynb
-│   ├── 06_team_tactical_style.ipynb
-│   ├── 07_player_role_fit.ipynb
-│   └── 08_reporting.ipynb
-│
-├── src
-│   ├── ingest_statsbomb.py
-│   ├── build_duckdb.py
-│   ├── features.py
-│   ├── xT_model.py
-│   ├── vaep_model.py
-│   ├── player_value.py
-│   └── team_style.py
-│
-├── docs
-│   ├── EP01_possession_value.md
-│   └── data_dictionary.md
-│
-├── reports
-│
-├── README.md
-├── requirements.txt
-└── .gitignore
+    football-possession-value
+    │
+    ├── config
+    ├── data
+    │   ├── raw
+    │   └── processed
+    ├── db
+    ├── notebooks
+    │   ├── 01_data_ingestion.ipynb
+    │   ├── 02_event_model.ipynb
+    │   ├── 03_xT_model.ipynb
+    │   ├── 04_vaep_training.ipynb
+    │   ├── 05_player_value_analysis.ipynb
+    │   ├── 06_team_tactical_style.ipynb
+    │   ├── 07_player_role_fit.ipynb
+    │   ├── 08_recruitment_case_study.ipynb
+    │   ├── 09_budget_constrained_optimisation.ipynb
+    │   └── 10_robust_recruitment_simulation.ipynb
+    ├── src
+    ├── docs
+    ├── reports
+    │   └── figures
+    ├── README.md
+    ├── requirements.txt
+    └── LICENSE
 ```
 
----
+------------------------------------------------------------------------
 
-# Key Outputs
+# How To Run
 
-The project produces several analytical outputs.
+Install dependencies
 
-### Player Impact Rankings
+    pip install -r requirements.txt
 
-Players ranked by:
+Run notebooks sequentially
 
-- value added per 90
-- progression value
-- creative impact
+    01 → 02 → 03 → … → 10
 
----
-
-### Tactical Style Analysis
-
-Team profiles including:
-
-- progression patterns
-- spatial threat maps
-- attacking tendencies
-
----
-
-### Player Role Profiles
-
-Players represented as vectors of tactical metrics enabling:
-
-- player similarity search
-- role classification
-- recruitment analysis
-
----
+------------------------------------------------------------------------
 
 # Tech Stack
 
 Python ecosystem:
 
-- pandas
-- duckdb
-- scikit-learn
-- LightGBM
+-   pandas\
+-   numpy\
+-   duckdb\
+-   scikit-learn\
+-   LightGBM\
+-   pyarrow\
+-   pulp
 
 Football analytics libraries:
 
-- statsbombpy
-- mplsoccer
+-   statsbombpy\
+-   mplsoccer
 
-Visualization:
+Visualisation:
 
-- matplotlib
-- seaborn
+-   matplotlib\
+-   seaborn
 
----
+------------------------------------------------------------------------
 
-# Project Goals
+# License
 
-This project aims to demonstrate practical skills in:
+MIT License
 
-- football event data modelling
-- spatial analytics
-- machine learning applied to sports
-- reproducible data science pipelines
-
-The framework can be extended for scouting, tactical analysis and recruitment decision support.
-
----
-
-## License
-
-This project is licensed under the MIT License.
-
----
+------------------------------------------------------------------------
 
 # Author
 
-Manuel Pérez Bañuls
-Data Science - Football Analytics
+Manuel Pérez Bañuls\
+Data Science --- Football Analytics
