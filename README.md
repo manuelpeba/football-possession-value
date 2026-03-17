@@ -1,6 +1,6 @@
 # Football Possession Value
 
-### Data-Driven Tactical Analysis & Recruitment Decision Modelling
+### Building end-to-end decision systems for football: from data to actionable insights under real-world constraints.
 
 A football analytics project that models **possession value, player
 impact, tactical team styles, and recruitment decisions** using event
